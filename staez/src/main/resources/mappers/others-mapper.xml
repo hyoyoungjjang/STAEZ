@@ -107,7 +107,6 @@
      	left join concert_schedule cs on (c.concert_no = cs.concert_no)
         where c.concert_status = 'Y'
     	and cg.category_no = #{cNo}
-     	and cs.end_date >= current_date
 		group by c.concert_no, cg.category_name
     	limit 10;
 	</select>
@@ -132,7 +131,6 @@
 		left join concert_schedule cs on (c.concert_no = cs.concert_no)
 		where cg.category_no = #{cNo}
 		and ca.status = 'Y'
-		and cs.end_date >= current_date
 		group by c.concert_no, ca.file_path, ca.change_name
 		limit 10;
 	</select>
@@ -162,7 +160,6 @@
      	left join concert_attachment ca on (c.concert_no = ca.concert_no)
         where c.concert_status = 'Y'
     	and cg.category_no = 8 or c.age_limit = 'age_limit'
-     	and cs.end_date >= current_date
 		group by c.concert_no, cg.category_name, c.concert_plot, ca.origin_name
 		order by c.concert_no asc
     	limit 10
@@ -190,7 +187,6 @@
 		left join concert_schedule cs on (c.concert_no = cs.concert_no)
 		where cg.category_no = 8 or c.age_limit = 'age_limit'
 		and ca.status = 'Y'
-		and cs.end_date >= current_date
 		group by c.concert_no, ca.file_path, ca.change_name, ca.origin_name
 		order by c.concert_no asc
 		limit 10
@@ -220,18 +216,20 @@
 		where c.concert_status = 'Y'
 		and cg.category_no = #{cNo}
 		and ca.status = 'Y'
-		and l.end_date >= current_date
+		order by start_date desc
 		limit 10;
 	</select>
 	
 	<select id="selectLatestCategoryConcertImg" resultMap="concertResult">
-		select 
+	select 
 			c.concert_no, 
+			c.concert_title,
 			ca.file_path, 
 			ca.change_name,
 			ca.origin_name
 		from (select 
 				c.concert_no,
+				min(cs.start_date) as start_date,
 			 	max(cs.start_date) latest,
 			 	max(cs.end_date) end_date
 				from concert c
@@ -245,7 +243,7 @@
 		where c.concert_status = 'Y'
 		and cg.category_no = #{cNo}
 		and ca.status = 'Y'
-		and l.end_date >= current_date
+		order by start_date desc
 		limit 10;
 	</select>
 	
@@ -274,7 +272,6 @@
 		where c.concert_status = 'Y'
 		and (cg.category_no = 8 or c.age_limit = 'age_limit')
 		and ca.status = 'Y'
-		and l.end_date >= current_date
 		limit 10
 	</select>
 	
@@ -300,7 +297,6 @@
 		where c.concert_status = 'Y'
 		and (cg.category_no = 8 or c.age_limit = 'age_limit')
 		and ca.status = 'Y'
-		and l.end_date >= current_date
 		limit 10
 	</select>
 	

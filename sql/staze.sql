@@ -1090,8 +1090,3 @@ REFERENCES concert;
 
 ALTER TABLE concert_category ADD FOREIGN KEY(category_no)
 REFERENCES category;
-
-
-
-
-

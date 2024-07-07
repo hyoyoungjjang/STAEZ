@@ -57,9 +57,9 @@ public class InquireController {
 		int result = iService.insertInquire(b, cNo);
 		
 		if(result < 1) {
-			session.setAttribute("alertMsg", "문의등록실패");
+			session.setAttribute("alertMsg", "臾몄쓽�벑濡앹떎�뙣");
 		} else {
-			session.setAttribute("alertMsg", "문의등록완료");
+			session.setAttribute("alertMsg", "臾몄쓽�벑濡앹셿猷�");
 		}
 		
 		return "redirect:/inquireList.me?cpage=1";
@@ -76,7 +76,6 @@ public class InquireController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		
 		ArrayList<Board> faqs = iService.ajaxSelectFaq(pi);
-		System.out.println(listCount);
 		Map<String, Object> resMap = new HashMap<String, Object>();
 		resMap.put("faqs", faqs);
 		resMap.put("pi", pi);

@@ -200,10 +200,10 @@ public class ConcertReserveController {
 				message.setSubject("예매 정보");
 				message.setText(emailText);
 				
-				String[] to = {userName};
+				String to = userName;
 				message.setTo(to);
 				
-				String[] cc = {recipientEmail};
+				String cc = recipientEmail;
 				message.setCc(cc);
 				
 				sender.send(message);
@@ -213,10 +213,10 @@ public class ConcertReserveController {
 				message.setSubject("예매 정보");
 				message.setText(emailText);
 				
-				String[] to = {userName};
+				String to = userName;
 				message.setTo(to);
 				
-				String[] cc = {recipientEmail};
+				String cc = recipientEmail;
 				message.setCc(cc);
 				
 				sender.send(message);

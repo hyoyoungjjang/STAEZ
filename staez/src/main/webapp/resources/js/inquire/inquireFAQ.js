@@ -6,7 +6,7 @@ window.onload = function(){
 
 function drawCategory(categorys){
     const categorySpen = document.querySelectorAll(".categoryName");
-    console.log(categorySpen)
+
     for (let i= 0; i < categorySpen.length; i++){
         categorySpen[i].innerHTML = categorys[i].categoryName;
         categorySpen[i].id = categorys[i].categoryNo;
@@ -16,7 +16,6 @@ function drawCategory(categorys){
 function drawFaq(res){
     const faqCount = document.querySelector(".faq-count");
     const faqContent = document.querySelector(".faq-content-container");
-    console.log("add" + res.pi.listCount);
     faqCount.innerHTML = `전체 ` + res.pi.listCount; 
 
     for(let f of res.faqs){
@@ -51,7 +50,6 @@ function addFaq(currentPage){
     const cPage = currentPage;
     const categoryNameArea = document.querySelector(".choice-background");
     const categoryName = categoryNameArea.querySelector(".choice-color-span").innerHTML;
-    console.log(categoryName)
     drawFaqContent({cPage, categoryName},(res)=>drawFaq(res));
 }
 
@@ -126,6 +124,7 @@ function drawSearchFaq(res){
 }
 
 function drawSearchAddFaq(res){
+    console.log(res)
     const faqContent = document.querySelector(".faq-content-container");
     for(let f of res.faqs){
         faqContent.innerHTML += `<div class="faq-content-area">

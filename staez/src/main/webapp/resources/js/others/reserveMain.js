@@ -166,10 +166,10 @@ function drawlatestConcertImg(concertImgs){
 }
 
 function drawBoardListContent(bList){
+    console.log("게시글" + bList)
     const userInput = document.querySelector("input[name = 'userNo']");
     const uNo = userInput.value;
     const boardArea = document.querySelector(".popularity-bulletin-information-area");
-    console.log(bList)
     if(!uNo){
         boardArea.innerHTML = ``
         for(let b of bList){

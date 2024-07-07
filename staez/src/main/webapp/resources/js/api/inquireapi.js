@@ -23,7 +23,6 @@ function selectFaq(data, callback){
 }
 
 function drawFaqContent(data, callback){
-    console.log(data)
     $.ajax({
         url : "ajaxCategoryFaq.iq",
         data : data,
@@ -37,7 +36,6 @@ function drawFaqContent(data, callback){
 }
 
 function faqSearch(data, callback){
-    console.log(data)
     $.ajax({
         url : "ajaxSearchSelectFaq.iq",
         data : data,
