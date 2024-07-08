@@ -150,13 +150,10 @@ public class ConcertReserveController {
 	@PostMapping(value = "insertReserve.co", produces = "application/json; charset-UTF-8")
 	public String insertReserve(String rids) {
 
-		System.out.println(rids);
 		JsonObject totalObj = JsonParser.parseString(rids).getAsJsonObject();
-	
 		
 	    int totalPrice = Integer.parseInt(totalObj.get("totalAmount").getAsString());
-		
-		int concertNo = Integer.parseInt(totalObj.get("concertNo").getAsString());
+				
 		String recipientEmail = totalObj.get("recipientEmail").getAsString();
 		
 		ReserveInsertDTO rid = new ReserveInsertDTO();
@@ -170,7 +167,6 @@ public class ConcertReserveController {
 		rid.setRecipientBirth(totalObj.get("recipientBirth").getAsString());
 		
 		JsonArray seatListArray = totalObj.getAsJsonArray("seatList");
-		System.out.println(seatListArray.size());
 		List<String> seatList = new ArrayList<>();
 		for (JsonElement seatInformation : seatListArray) {
 			seatList.add(seatInformation.getAsString());
@@ -196,7 +192,7 @@ public class ConcertReserveController {
 		if (result > 0) {
 			if(rid.getPayMethod().equals("카카오페이")) {
 				SimpleMailMessage message = new SimpleMailMessage();
-				String emailText = "좌석정보 : " + seatStr + "결제 방식 : 카카오페이" + "결제 금액 : " + totalPrice ;
+				String emailText = "공연 날짜 : " + rid.getConcertDate() + " 좌석정보 : " + seatStr + " 결제 방식 : 카카오페이" + "결제 금액 : " + totalPrice + "원" ;
 				message.setSubject("예매 정보");
 				message.setText(emailText);
 				
@@ -209,7 +205,7 @@ public class ConcertReserveController {
 				sender.send(message);
 			} else {
 				SimpleMailMessage message = new SimpleMailMessage();
-				String emailText = "좌석정보 : " + seatStr + "결제 방식 : 무통장입금" + "결제 금액 : " + totalPrice +"입금계좌 : KB국민은행 "+ deposit ;
+				String emailText = "공연 날짜 : " + rid.getConcertDate() + "좌석정보 : " + seatStr + "결제 방식 : 무통장입금" + "결제 금액 : " + totalPrice + "원 " +"입금계좌 : KB국민은행 "+ deposit ;
 				message.setSubject("예매 정보");
 				message.setText(emailText);
 				
@@ -400,6 +396,7 @@ public class ConcertReserveController {
         // ResponseEntity(Spring Framework에서 제공하는 클래스)
         // HTTP 응답을 나타내는 클래스로, 상태 코드, 헤더 및 응답 본문을 포함하여 외부 서비스에서 받은 응답을 처리하는 데 사용됩니다.
         ResponseEntity<ReadyResponse> responseEntity = template.postForEntity(url, requestEntity, ReadyResponse.class);
+       
         log.info("결제준비 응답객체: " + responseEntity.getBody());
 
         ReadyResponse readyResponse = responseEntity.getBody();
